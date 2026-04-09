@@ -36,15 +36,17 @@ def search_certificates(domain: str, wildcard: bool = True) -> list[dict]:
             if cert_id in seen:
                 continue
             seen.add(cert_id)
-            results.append({
-                "id": cert_id,
-                "logged_at": cert.get("entry_timestamp"),
-                "not_before": cert.get("not_before"),
-                "not_after": cert.get("not_after"),
-                "common_name": cert.get("common_name"),
-                "name_value": cert.get("name_value"),
-                "issuer_name": cert.get("issuer_name"),
-            })
+            results.append(
+                {
+                    "id": cert_id,
+                    "logged_at": cert.get("entry_timestamp"),
+                    "not_before": cert.get("not_before"),
+                    "not_after": cert.get("not_after"),
+                    "common_name": cert.get("common_name"),
+                    "name_value": cert.get("name_value"),
+                    "issuer_name": cert.get("issuer_name"),
+                }
+            )
         log.info("Found %d unique certificates for %s", len(results), domain)
         return results
     except httpx.HTTPStatusError as e:

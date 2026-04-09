@@ -49,18 +49,20 @@ def fetch_threads(subreddit: str, sort: str = "hot", limit: int = 25, time_filte
             if post.get("stickied"):
                 continue
 
-            threads.append({
-                "title": post.get("title"),
-                "url": f"https://www.reddit.com{post.get('permalink', '')}",
-                "author": post.get("author"),
-                "score": post.get("score", 0),
-                "num_comments": post.get("num_comments", 0),
-                "created_utc": post.get("created_utc"),
-                "selftext": post.get("selftext", "")[:500],  # Truncate long posts
-                "link_flair_text": post.get("link_flair_text"),
-                "is_self": post.get("is_self", False),
-                "external_url": post.get("url") if not post.get("is_self") else None,
-            })
+            threads.append(
+                {
+                    "title": post.get("title"),
+                    "url": f"https://www.reddit.com{post.get('permalink', '')}",
+                    "author": post.get("author"),
+                    "score": post.get("score", 0),
+                    "num_comments": post.get("num_comments", 0),
+                    "created_utc": post.get("created_utc"),
+                    "selftext": post.get("selftext", "")[:500],  # Truncate long posts
+                    "link_flair_text": post.get("link_flair_text"),
+                    "is_self": post.get("is_self", False),
+                    "external_url": post.get("url") if not post.get("is_self") else None,
+                }
+            )
 
         log.info("Fetched %d threads from r/%s (%s)", len(threads), subreddit, sort)
         return threads
@@ -89,11 +91,13 @@ def fetch_comments(permalink: str, limit: int = 50) -> list[dict]:
                 comment = child.get("data", {})
                 if child.get("kind") != "t1":
                     continue
-                comments.append({
-                    "author": comment.get("author"),
-                    "body": comment.get("body", "")[:1000],
-                    "score": comment.get("score", 0),
-                })
+                comments.append(
+                    {
+                        "author": comment.get("author"),
+                        "body": comment.get("body", "")[:1000],
+                        "score": comment.get("score", 0),
+                    }
+                )
 
         return comments
 
@@ -135,6 +139,7 @@ def main():
 
     if args.output_dir:
         import os
+
         os.makedirs(args.output_dir, exist_ok=True)
         for i, thread in enumerate(all_threads):
             filename = f"{args.output_dir}/thread_{i:03d}.json"

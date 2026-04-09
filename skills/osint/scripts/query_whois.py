@@ -37,10 +37,23 @@ def lookup(domain: str) -> dict:
         w = whois.whois(domain)
         data = {}
         for key in [
-            "domain_name", "registrar", "whois_server", "creation_date",
-            "expiration_date", "updated_date", "name_servers", "status",
-            "emails", "name", "org", "address", "city", "state",
-            "registrant_postal_code", "country", "dnssec",
+            "domain_name",
+            "registrar",
+            "whois_server",
+            "creation_date",
+            "expiration_date",
+            "updated_date",
+            "name_servers",
+            "status",
+            "emails",
+            "name",
+            "org",
+            "address",
+            "city",
+            "state",
+            "registrant_postal_code",
+            "country",
+            "dnssec",
         ]:
             val = getattr(w, key, None)
             if val is not None:

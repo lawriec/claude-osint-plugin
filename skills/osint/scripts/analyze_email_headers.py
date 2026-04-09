@@ -55,7 +55,7 @@ def parse_received_header(header: str) -> dict:
     # Look for date pattern at end of Received header (after semicolon)
     semicolon_idx = header.rfind(";")
     if semicolon_idx != -1:
-        date_str = header[semicolon_idx + 1:].strip()
+        date_str = header[semicolon_idx + 1 :].strip()
         try:
             dt = parsedate_to_datetime(date_str)
             result["timestamp"] = dt.isoformat()
@@ -100,12 +100,14 @@ def analyze_headers(raw_headers: str) -> dict:
                     dt1 = datetime.fromisoformat(ts1)
                     dt2 = datetime.fromisoformat(ts2)
                     delay = (dt2 - dt1).total_seconds()
-                    delays.append({
-                        "from_hop": i - 1,
-                        "to_hop": i,
-                        "delay_seconds": delay,
-                        "suspicious": delay > 300,  # > 5 min between hops is unusual
-                    })
+                    delays.append(
+                        {
+                            "from_hop": i - 1,
+                            "to_hop": i,
+                            "delay_seconds": delay,
+                            "suspicious": delay > 300,  # > 5 min between hops is unusual
+                        }
+                    )
                 except Exception:
                     pass
         result["hop_delays"] = delays

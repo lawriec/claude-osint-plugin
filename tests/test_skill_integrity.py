@@ -203,6 +203,7 @@ class TestPluginConfig:
 
     def test_plugin_json_valid(self):
         import json
+
         with open(ROOT / ".claude-plugin" / "plugin.json") as f:
             data = json.load(f)
         assert data["name"] == "osint"
@@ -211,6 +212,7 @@ class TestPluginConfig:
 
     def test_mcp_json_valid(self):
         import json
+
         with open(ROOT / ".mcp.json") as f:
             data = json.load(f)
         assert "mcpServers" in data

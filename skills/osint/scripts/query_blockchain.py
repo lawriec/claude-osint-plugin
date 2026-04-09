@@ -79,9 +79,7 @@ def lookup_btc_txs(address: str, limit: int = 10) -> dict:
             }
 
             if tx.get("status", {}).get("block_time"):
-                tx_data["timestamp"] = datetime.fromtimestamp(
-                    tx["status"]["block_time"], tz=UTC
-                ).isoformat()
+                tx_data["timestamp"] = datetime.fromtimestamp(tx["status"]["block_time"], tz=UTC).isoformat()
 
             # Summarize inputs and outputs
             tx_data["input_count"] = len(tx.get("vin", []))

@@ -60,9 +60,7 @@ class TestScriptStructure:
     def test_has_logging(self, script):
         """Every script should use logging (not print for diagnostics)."""
         text = script.read_text(encoding="utf-8")
-        assert "import logging" in text or "from logging" in text, (
-            f"{script.name}: should use logging module"
-        )
+        assert "import logging" in text or "from logging" in text, f"{script.name}: should use logging module"
 
     def test_json_output(self, script):
         """Every script should import json for structured output."""
@@ -84,6 +82,7 @@ class TestDNSScript:
         )
         assert result.returncode == 0
         import json
+
         data = json.loads(result.stdout)
         assert data["domain"] == "example.com"
         assert "records" in data
@@ -101,6 +100,7 @@ class TestCrtshScript:
         )
         assert result.returncode == 0
         import json
+
         data = json.loads(result.stdout)
         assert data["domain"] == "example.com"
         assert "subdomains" in data
@@ -117,6 +117,7 @@ class TestShodanScript:
         )
         assert result.returncode == 0
         import json
+
         data = json.loads(result.stdout)
         assert data["ip"] == "8.8.8.8"
 
@@ -126,14 +127,14 @@ class TestBlockchainScript:
     def test_btc_lookup(self):
         # Satoshi's address — always exists
         result = subprocess.run(
-            [UV_BIN, "run", str(SCRIPTS_DIR / "query_blockchain.py"), "btc",
-             "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"],
+            [UV_BIN, "run", str(SCRIPTS_DIR / "query_blockchain.py"), "btc", "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"],
             capture_output=True,
             text=True,
             timeout=30,
         )
         assert result.returncode == 0
         import json
+
         data = json.loads(result.stdout)
         assert data["chain"] == "bitcoin"
         assert data["balance_sat"] >= 0
