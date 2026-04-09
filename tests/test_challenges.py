@@ -67,7 +67,10 @@ class TestChallengeCategories:
         assert (CHALLENGES_DIR / "README.md").exists()
 
     def test_each_category_has_challenges(self):
-        categories = ["geolocation", "people", "infrastructure", "image-forensics", "multi-domain"]
+        categories = [
+            "geolocation", "people", "infrastructure", "image-forensics",
+            "multi-domain", "transportation", "crypto", "verification",
+        ]
         for cat in categories:
             cat_dir = CHALLENGES_DIR / cat
             challenges = list(cat_dir.glob("*.md"))
@@ -75,4 +78,4 @@ class TestChallengeCategories:
 
     def test_minimum_challenge_count(self):
         all_challenges = get_challenge_files()
-        assert len(all_challenges) >= 8, f"Expected 8+ challenges, found {len(all_challenges)}"
+        assert len(all_challenges) >= 20, f"Expected 20+ challenges, found {len(all_challenges)}"

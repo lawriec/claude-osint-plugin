@@ -21,8 +21,10 @@ Items fully specified and ready to implement. Pick from here when working on fea
 ### Challenges
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-| MEDIUM | challenges/image-forensics/03-social-media-metadata.md | challenge | Track image origin across social platforms |
-| LOW | challenges/crypto/01-wallet-tracing.md | challenge | Trace cryptocurrency transactions |
+| MEDIUM | challenges/multi-domain/04-github-forensics.md | challenge | Investigate a GitHub user via commits, emails, linked repos |
+| MEDIUM | challenges/geolocation/06-ip-camera-discovery.md | challenge | Identify location from IP camera stream clues (Shodan + geolocation) |
+| LOW | challenges/infrastructure/06-google-dorking-practical.md | challenge | Find exposed files/data using Google search operators |
+| LOW | challenges/people/04-account-clustering.md | challenge | Determine if multiple accounts are same person via behavioral analysis |
 
 ### MCP Server
 | Priority | Item | Type | Description |
@@ -79,3 +81,13 @@ Items that have been implemented.
 | geolocation/04-vegetation-clues | 2026-04-09 | Feature batch |
 | infrastructure/03-phishing-detection | 2026-04-09 | Feature batch |
 | multi-domain/03-ctf-style | 2026-04-09 | Feature batch |
+| infrastructure/04-email-header-forensics | 2026-04-09 | Challenge expansion |
+| infrastructure/05-ip-attribution | 2026-04-09 | Challenge expansion |
+| image-forensics/03-social-media-metadata | 2026-04-09 | Challenge expansion |
+| people/03-reddit-community-analysis | 2026-04-09 | Challenge expansion |
+| geolocation/05-flight-path-identification | 2026-04-09 | Challenge expansion |
+| transportation/01-vessel-identification | 2026-04-09 | Challenge expansion |
+| transportation/02-airport-traffic-analysis | 2026-04-09 | Challenge expansion |
+| crypto/01-wallet-tracing | 2026-04-09 | Challenge expansion |
+| verification/01-historical-website-analysis | 2026-04-09 | Challenge expansion |
+| verification/02-threat-intel-domain-scan | 2026-04-09 | Challenge expansion |

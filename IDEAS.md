@@ -30,11 +30,19 @@ The community analysis workflow can append ideas here. Manual additions welcome.
 ## Challenge Ideas
 
 - **Time-based challenges** — "This photo was taken at a specific time of day. When?" (shadow analysis)
-- **Multi-language challenges** — Clues in non-Latin scripts (Arabic, Cyrillic, CJK, Devanagari)
+- **Multi-language challenges** — Clues in non-Latin scripts (Arabic, Cyrillic, CJK, Devanagari). Requires translation and cross-cultural platform knowledge. Inspired by Sofia Santos/gralhix exercises.
 - **Historical OSINT** — "This website existed in 2015 but is gone now. What did it say?" (Wayback Machine)
 - **Social engineering awareness** — "What information is publicly available that could be used for social engineering?" (ethical awareness)
 - **Supply chain OSINT** — "Map the technology stack of this company from public information"
 - **Real CTF challenges** — Port past OSINT CTF challenges from SANS, TraceLabs, etc.
+- **IP camera / device discovery** — LinusKay IPcam-style: identify a location from an IP camera stream using visible clues + Shodan device data. Requires: query_shodan_internetdb.py, geolocation skills.
+- **GitHub / code repo forensics** — OSINT Dojo-style: extract identity from a GitHub user's commit emails, linked accounts, repo activity patterns, and code comments.
+- **Google dorking practical** — Find publicly exposed files on a target domain using only advanced Google operators. Ties to google-dorking-cheatsheet.md reference.
+- **Satellite imagery timeline** — Use free Sentinel Hub / Copernicus data to track changes at a location over time. Needs research on free imagery APIs first.
+- **Domain parking / sinkhole detection** — Identify whether a domain has been parked, sinkholed, or is actively malicious based on infrastructure fingerprinting patterns.
+- **10-step OSINT CTF mega-chain** — A long-form CTF where each answer feeds the next step, spanning all 8 categories. Inspired by TraceLabs and SANS OSINT CTFs.
+- **Account clustering** — Given multiple social media accounts, determine if the same person controls them using behavioral correlation (posting patterns, writing style, timing, interests). Inspired by Bellingcat methodology.
+- **Event timeline verification** — Fact-check a news claim by building a verified timeline from multiple independent public sources. Bellingcat-style verification challenge.
 
 ## Workflow Ideas
 
@@ -42,6 +50,14 @@ The community analysis workflow can append ideas here. Manual additions welcome.
 - **Automated reporting** — Generate structured reports from search logs and evidence chains.
 - **Quality scoring** — Automated assessment of investigation thoroughness based on search log completeness, evidence chain coverage, and confidence levels.
 - **Cross-investigation linking** — Use knowledge graph to find connections between separate investigations.
+
+## OSINT Challenge Sources (for inspiration)
+
+- **gralhix.com** — Sofia Santos' 30+ progressive geolocation/visual OSINT exercises with video walkthroughs
+- **challenge.bellingcat.com** — Monthly themed challenges (5 questions per month) from professional investigators
+- **osintdojo.com** — Structured ranking system with badge progression across OSINT domains
+- **TryHackMe OhSINT** — Beginner-friendly single-image OSINT room with 7 investigative questions
+- **github.com/LinusKay/osint-challenges** — 4 diverse challenges (Church Chasing, IPcam, Obsessed, Window Shopping) with solutions
 
 ## Community and Learning
 
