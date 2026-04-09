@@ -30,10 +30,23 @@ log = logging.getLogger(__name__)
 BASE_URL = "https://opensky-network.org/api"
 
 STATES_FIELDS = [
-    "icao24", "callsign", "origin_country", "time_position", "last_contact",
-    "longitude", "latitude", "baro_altitude", "on_ground", "velocity",
-    "true_track", "vertical_rate", "sensors", "geo_altitude", "squawk",
-    "spi", "position_source",
+    "icao24",
+    "callsign",
+    "origin_country",
+    "time_position",
+    "last_contact",
+    "longitude",
+    "latitude",
+    "baro_altitude",
+    "on_ground",
+    "velocity",
+    "true_track",
+    "vertical_rate",
+    "sensors",
+    "geo_altitude",
+    "squawk",
+    "spi",
+    "position_source",
 ]
 
 
@@ -98,14 +111,16 @@ def get_track(icao24: str) -> dict:
 
         waypoints = []
         for wp in data.get("path", []):
-            waypoints.append({
-                "time": wp[0] if len(wp) > 0 else None,
-                "latitude": wp[1] if len(wp) > 1 else None,
-                "longitude": wp[2] if len(wp) > 2 else None,
-                "baro_altitude": wp[3] if len(wp) > 3 else None,
-                "true_track": wp[4] if len(wp) > 4 else None,
-                "on_ground": wp[5] if len(wp) > 5 else None,
-            })
+            waypoints.append(
+                {
+                    "time": wp[0] if len(wp) > 0 else None,
+                    "latitude": wp[1] if len(wp) > 1 else None,
+                    "longitude": wp[2] if len(wp) > 2 else None,
+                    "baro_altitude": wp[3] if len(wp) > 3 else None,
+                    "true_track": wp[4] if len(wp) > 4 else None,
+                    "on_ground": wp[5] if len(wp) > 5 else None,
+                }
+            )
 
         log.info("Track for %s: %d waypoints", icao24, len(waypoints))
         return {
@@ -141,16 +156,18 @@ def get_flights(airport: str, flight_type: str, hours: int = 24) -> dict:
 
         results = []
         for f in flights:
-            results.append({
-                "icao24": f.get("icao24"),
-                "callsign": (f.get("callsign") or "").strip(),
-                "departure_airport": f.get("estDepartureAirport"),
-                "arrival_airport": f.get("estArrivalAirport"),
-                "first_seen": f.get("firstSeen"),
-                "last_seen": f.get("lastSeen"),
-                "departure_horiz_distance": f.get("estDepartureAirportHorizDistance"),
-                "arrival_horiz_distance": f.get("estArrivalAirportHorizDistance"),
-            })
+            results.append(
+                {
+                    "icao24": f.get("icao24"),
+                    "callsign": (f.get("callsign") or "").strip(),
+                    "departure_airport": f.get("estDepartureAirport"),
+                    "arrival_airport": f.get("estArrivalAirport"),
+                    "first_seen": f.get("firstSeen"),
+                    "last_seen": f.get("lastSeen"),
+                    "departure_horiz_distance": f.get("estDepartureAirportHorizDistance"),
+                    "arrival_horiz_distance": f.get("estArrivalAirportHorizDistance"),
+                }
+            )
 
         log.info("%s at %s (last %dh): %d flights", flight_type.capitalize(), airport, hours, len(results))
         return {
@@ -165,7 +182,8 @@ def get_flights(airport: str, flight_type: str, hours: int = 24) -> dict:
     except httpx.HTTPStatusError as e:
         log.error("OpenSky API returned %d: %s", e.response.status_code, e.response.text[:200])
         return {
-            "airport": airport, "type": flight_type,
+            "airport": airport,
+            "type": flight_type,
             "error": f"HTTP {e.response.status_code}",
         }
     except Exception as e:

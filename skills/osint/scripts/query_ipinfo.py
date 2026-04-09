@@ -87,7 +87,11 @@ def geo_lookup(ip: str) -> dict:
 
         log.info(
             "IP %s: %s, %s, %s (%s)",
-            ip, data.get("city"), data.get("regionName"), data.get("country"), data.get("org"),
+            ip,
+            data.get("city"),
+            data.get("regionName"),
+            data.get("country"),
+            data.get("org"),
         )
         return result
     except httpx.HTTPStatusError as e:
@@ -163,7 +167,7 @@ def batch_lookup(filepath: str) -> dict:
         all_results = []
         # Process in chunks of 100
         for i in range(0, len(ips), 100):
-            chunk = ips[i:i + 100]
+            chunk = ips[i : i + 100]
             log.info("Batch %d: processing IPs %d-%d of %d", i // 100 + 1, i + 1, i + len(chunk), len(ips))
 
             try:
@@ -188,24 +192,26 @@ def batch_lookup(filepath: str) -> dict:
                         "status": item.get("status"),
                     }
                     if item.get("status") == "success":
-                        entry.update({
-                            "country": item.get("country"),
-                            "country_code": item.get("countryCode"),
-                            "region": item.get("regionName"),
-                            "city": item.get("city"),
-                            "zip": item.get("zip"),
-                            "latitude": item.get("lat"),
-                            "longitude": item.get("lon"),
-                            "timezone": item.get("timezone"),
-                            "isp": item.get("isp"),
-                            "org": item.get("org"),
-                            "as": item.get("as"),
-                            "asname": item.get("asname"),
-                            "reverse": item.get("reverse"),
-                            "mobile": item.get("mobile"),
-                            "proxy": item.get("proxy"),
-                            "hosting": item.get("hosting"),
-                        })
+                        entry.update(
+                            {
+                                "country": item.get("country"),
+                                "country_code": item.get("countryCode"),
+                                "region": item.get("regionName"),
+                                "city": item.get("city"),
+                                "zip": item.get("zip"),
+                                "latitude": item.get("lat"),
+                                "longitude": item.get("lon"),
+                                "timezone": item.get("timezone"),
+                                "isp": item.get("isp"),
+                                "org": item.get("org"),
+                                "as": item.get("as"),
+                                "asname": item.get("asname"),
+                                "reverse": item.get("reverse"),
+                                "mobile": item.get("mobile"),
+                                "proxy": item.get("proxy"),
+                                "hosting": item.get("hosting"),
+                            }
+                        )
                         if item.get("lat") is not None and item.get("lon") is not None:
                             entry["maps_url"] = f"https://www.google.com/maps?q={item['lat']},{item['lon']}"
                     else:

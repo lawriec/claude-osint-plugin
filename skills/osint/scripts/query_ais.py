@@ -43,21 +43,23 @@ def search_vessel(name: str) -> dict:
         for v in vessels:
             vessel_name = v.get("name") or ""
             if query in vessel_name.lower():
-                matches.append({
-                    "mmsi": v.get("mmsi"),
-                    "name": v.get("name"),
-                    "ship_type": v.get("shipType"),
-                    "callsign": v.get("callSign"),
-                    "imo": v.get("imo"),
-                    "destination": v.get("destination"),
-                    "draught": v.get("draught"),
-                    "eta": v.get("eta"),
-                    "pos_type": v.get("posType"),
-                    "reference_point_a": v.get("referencePointA"),
-                    "reference_point_b": v.get("referencePointB"),
-                    "reference_point_c": v.get("referencePointC"),
-                    "reference_point_d": v.get("referencePointD"),
-                })
+                matches.append(
+                    {
+                        "mmsi": v.get("mmsi"),
+                        "name": v.get("name"),
+                        "ship_type": v.get("shipType"),
+                        "callsign": v.get("callSign"),
+                        "imo": v.get("imo"),
+                        "destination": v.get("destination"),
+                        "draught": v.get("draught"),
+                        "eta": v.get("eta"),
+                        "pos_type": v.get("posType"),
+                        "reference_point_a": v.get("referencePointA"),
+                        "reference_point_b": v.get("referencePointB"),
+                        "reference_point_c": v.get("referencePointC"),
+                        "reference_point_d": v.get("referencePointD"),
+                    }
+                )
 
         log.info("Found %d vessel(s) matching '%s' (searched %d total)", len(matches), name, len(vessels))
         return {

@@ -51,25 +51,27 @@ def search_scans(query: str, size: int = 10) -> dict:
             page = r.get("page", {})
             stats = r.get("stats", {})
 
-            results.append({
-                "uuid": r.get("_id"),
-                "url": task.get("url"),
-                "domain": page.get("domain"),
-                "ip": page.get("ip"),
-                "country": page.get("country"),
-                "server": page.get("server"),
-                "asn": page.get("asn"),
-                "asnname": page.get("asnname"),
-                "status": page.get("status"),
-                "mime_type": page.get("mimeType"),
-                "title": page.get("title"),
-                "time": task.get("time"),
-                "visibility": task.get("visibility"),
-                "requests_count": stats.get("requests"),
-                "unique_ips": stats.get("uniqIPs"),
-                "report_url": f"https://urlscan.io/result/{r.get('_id')}/",
-                "screenshot_url": r.get("screenshot"),
-            })
+            results.append(
+                {
+                    "uuid": r.get("_id"),
+                    "url": task.get("url"),
+                    "domain": page.get("domain"),
+                    "ip": page.get("ip"),
+                    "country": page.get("country"),
+                    "server": page.get("server"),
+                    "asn": page.get("asn"),
+                    "asnname": page.get("asnname"),
+                    "status": page.get("status"),
+                    "mime_type": page.get("mimeType"),
+                    "title": page.get("title"),
+                    "time": task.get("time"),
+                    "visibility": task.get("visibility"),
+                    "requests_count": stats.get("requests"),
+                    "unique_ips": stats.get("uniqIPs"),
+                    "report_url": f"https://urlscan.io/result/{r.get('_id')}/",
+                    "screenshot_url": r.get("screenshot"),
+                }
+            )
 
         total = data.get("total", len(results))
         has_more = data.get("has_more", total > len(results))
