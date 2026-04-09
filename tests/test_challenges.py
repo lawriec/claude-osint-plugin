@@ -68,8 +68,14 @@ class TestChallengeCategories:
 
     def test_each_category_has_challenges(self):
         categories = [
-            "geolocation", "people", "infrastructure", "image-forensics",
-            "multi-domain", "transportation", "crypto", "verification",
+            "geolocation",
+            "people",
+            "infrastructure",
+            "image-forensics",
+            "multi-domain",
+            "transportation",
+            "crypto",
+            "verification",
         ]
         for cat in categories:
             cat_dir = CHALLENGES_DIR / cat
