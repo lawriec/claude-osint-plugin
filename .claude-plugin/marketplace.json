@@ -1,0 +1,14 @@
+{
+  "name": "osint",
+  "owner": {
+    "name": "lawriec"
+  },
+  "plugins": [
+    {
+      "name": "osint",
+      "source": "./",
+      "description": "Open source intelligence (OSINT) research skill — investigate people, locations, domains, images, infrastructure, and digital artifacts using publicly available information",
+      "version": "1.0.0"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+# TODO — OSINT Plugin Backlog
+
+## Ready to Build
+
+Items fully specified and ready to implement. Pick from here when working on features.
+
+### References
+| Priority | Item | Type | Domain | Description |
+|----------|------|------|--------|-------------|
+| HIGH | document-analysis.md | reference | Documents | PDF metadata, email headers, Office document properties, steganography |
+| HIGH | vehicle-object-id.md | reference | Vehicles | License plate formats, aircraft (ADS-B/ICAO), ship tracking (AIS/MMSI) |
+| MEDIUM | crypto-financial.md | reference | Crypto | Blockchain explorers, wallet clustering, DeFi tracing, mixer detection |
+| MEDIUM | radio-signals.md | reference | Radio | SDR basics, amateur radio callsign lookup, broadcast identification |
+| MEDIUM | google-dorking-cheatsheet.md | reference | Search | Advanced Google operators for OSINT (site:, inurl:, filetype:, cache:) |
+| LOW | dark-web-research.md | reference | Dark web | Ahmia, onion scanning, .onion research ethics and legal boundaries |
+
+### Scripts
+| Priority | Item | Type | Description |
+|----------|------|------|-------------|
+| HIGH | query_flightradar.py | script | Aircraft lookup via OpenSky Network API (free, no key) |
+| HIGH | query_ais.py | script | Ship tracking via free marine traffic endpoints |
+| MEDIUM | query_virustotal.py | script | VirusTotal free API (needs free key, 4 req/min) |
+| MEDIUM | query_urlscan.py | script | URLScan.io search and submission (free) |
+| MEDIUM | query_ipinfo.py | script | IP geolocation and ASN lookup via ipinfo.io free tier |
+| LOW | query_wikidata_sparql.py | script | Wikidata SPARQL queries for entity resolution |
+| LOW | query_archive_today.py | script | archive.today snapshot search and retrieval |
+
+### Challenges
+| Priority | Item | Type | Description |
+|----------|------|------|-------------|
+| HIGH | challenges/geolocation/04-vegetation-clues.md | challenge | Identify location from vegetation and landscape |
+| HIGH | challenges/infrastructure/03-phishing-detection.md | challenge | Analyze a domain for phishing indicators |
+| MEDIUM | challenges/image-forensics/03-social-media-metadata.md | challenge | Track image origin across social platforms |
+| MEDIUM | challenges/multi-domain/03-ctf-style.md | challenge | Multi-step CTF-style OSINT challenge |
+| LOW | challenges/crypto/01-wallet-tracing.md | challenge | Trace cryptocurrency transactions |
+
+### MCP Server
+| Priority | Item | Type | Description |
+|----------|------|------|-------------|
+| HIGH | mcp-osint-recon | MCP | Consolidate scripts into TypeScript MCP with caching and rate limiting |
+
+## Needs Research
+
+Items that need investigation before implementation.
+
+| Item | Question |
+|------|----------|
+| Shodan full API MCP | Is there an existing MCP? What's the free tier? Worth building vs. using InternetDB? |
+| VirusTotal MCP | Multiple endpoints (URL scan, file scan, domain). Is the free tier useful enough? |
+| Censys MCP | Internet-wide scanning data. Free tier research needed. |
+| Image ELA tool | Best approach for Error Level Analysis? Python library or external tool? |
+| Maltego-style transforms | Can we build entity expansion as an MCP? What's the architecture? |
+| Face recognition ethics | PimEyes and similar tools — should we include guidance? Legal issues? |
+| SearXNG alternatives | Self-hosted vs. public instances. Docker setup documentation needed? |
+
+## Blocked
+
+Items waiting on external dependencies.
+
+| Item | Blocker |
+|------|---------|
+| TMDB MCP | Needs free API key (1 week approval process) |
+| Shodan full API | Needs paid API key for full search |
+| Discord server reading | Needs bot token or user cookie — ethical and TOS concerns |
+| Twitter/X API | No free read API. Workarounds exist but are fragile. |
+
+## Completed
+
+Items that have been implemented.
+
+| Item | Date | PR |
+|------|------|----|
+| Core skill (SKILL.md) | 2026-04-09 | Initial commit |
+| 7 core reference guides | 2026-04-09 | Initial commit |
+| 5 domain reference guides | 2026-04-09 | Initial commit |
+| 10 Python scripts | 2026-04-09 | Initial commit |
+| 10 OSINT challenges | 2026-04-09 | Initial commit |
+| Investigation templates | 2026-04-09 | Initial commit |
+| GitHub workflows (5) | 2026-04-09 | Initial commit |
+| Docker setup | 2026-04-09 | Initial commit |
+| Test suite | 2026-04-09 | Initial commit |

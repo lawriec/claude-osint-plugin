@@ -1,0 +1,16 @@
+# Knowledge graph database
+*.db
+
+# Downloaded artifacts (may contain large files)
+downloads/
+
+# Temporary files
+*.tmp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env

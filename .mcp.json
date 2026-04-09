@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "tavily": {
+      "command": "npx",
+      "args": ["-y", "tavily-mcp@latest"],
+      "env": {}
+    },
+    "gemini": {
+      "command": "npx",
+      "args": ["-y", "github:lawriec/mcp-gemini-media"],
+      "env": {}
+    },
+    "yt-dl": {
+      "command": "npx",
+      "args": ["-y", "@kevinwatt/yt-dlp-mcp@latest"],
+      "env": {}
+    },
+    "internet-archive": {
+      "command": "npx",
+      "args": ["-y", "github:lawriec/mcp-internet-archive"],
+      "env": {}
+    },
+    "video-reader": {
+      "command": "npx",
+      "args": ["-y", "github:lawriec/mcp-video-reader"],
+      "env": {}
+    },
+    "selenium": {
+      "command": "npx",
+      "args": ["-y", "@angiejones/mcp-selenium@latest"],
+      "env": {}
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {}
+    },
+    "memory-graph": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {}
+    },
+    "common-crawl": {
+      "command": "npx",
+      "args": ["-y", "github:lawriec/mcp-common-crawl"],
+      "env": {}
+    },
+    "reddit": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/adhikasp/mcp-reddit.git", "mcp-reddit"],
+      "env": {}
+    },
+    "searxng": {
+      "command": "npx",
+      "args": ["-y", "github:lawriec/mcp-searxng"],
+      "env": {}
+    }
+  }
+}
