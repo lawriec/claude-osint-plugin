@@ -21,10 +21,10 @@ Items fully specified and ready to implement. Pick from here when working on fea
 ### Challenges
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-| MEDIUM | challenges/multi-domain/04-github-forensics.md | challenge | Investigate a GitHub user via commits, emails, linked repos |
-| MEDIUM | challenges/geolocation/06-ip-camera-discovery.md | challenge | Identify location from IP camera stream clues (Shodan + geolocation) |
-| LOW | challenges/infrastructure/06-google-dorking-practical.md | challenge | Find exposed files/data using Google search operators |
-| LOW | challenges/people/04-account-clustering.md | challenge | Determine if multiple accounts are same person via behavioral analysis |
+| MEDIUM | challenges/multi-domain/05-github-forensics.md | challenge | Investigate a GitHub user via commits, emails, linked repos |
+| MEDIUM | challenges/geolocation/08-ip-camera-discovery.md | challenge | Identify location from IP camera stream clues (Shodan + geolocation) |
+| MEDIUM | challenges/corporate/02-executive-verification.md | challenge | Verify executive claims via LinkedIn, registries, filings |
+| LOW | challenges/verification/05-deepfake-detection.md | challenge | Identify manipulated/AI-generated media via forensic analysis |
 
 ### MCP Server
 | Priority | Item | Type | Description |
@@ -91,3 +91,13 @@ Items that have been implemented.
 | crypto/01-wallet-tracing | 2026-04-09 | Challenge expansion |
 | verification/01-historical-website-analysis | 2026-04-09 | Challenge expansion |
 | verification/02-threat-intel-domain-scan | 2026-04-09 | Challenge expansion |
+| image-forensics/04-reverse-image-search | 2026-04-09 | Challenge expansion v2 |
+| infrastructure/06-google-dorking-practical | 2026-04-09 | Challenge expansion v2 |
+| verification/03-wayback-timeline | 2026-04-09 | Challenge expansion v2 |
+| verification/04-fact-check-viral-claim | 2026-04-09 | Challenge expansion v2 |
+| corporate/01-company-investigation | 2026-04-09 | Challenge expansion v2 |
+| multi-domain/04-video-intelligence | 2026-04-09 | Challenge expansion v2 |
+| geolocation/06-common-crawl-historical | 2026-04-09 | Challenge expansion v2 |
+| geolocation/07-basic-whois-geolocation | 2026-04-09 | Challenge expansion v2 |
+| people/04-basic-social-footprint | 2026-04-09 | Challenge expansion v2 |
+| people/05-behavioral-pattern-analysis | 2026-04-09 | Challenge expansion v2 |

@@ -30,6 +30,7 @@ Verifiable OSINT challenges for testing and self-evaluation. Each challenge has 
 - **transportation/** — Aircraft and vessel identification and tracking
 - **crypto/** — Cryptocurrency wallet analysis and transaction tracing
 - **verification/** — Fact-checking, historical web analysis, and threat intelligence
+- **corporate/** — Company investigations, ownership chains, and business intelligence
 
 ## Challenge Difficulty
 

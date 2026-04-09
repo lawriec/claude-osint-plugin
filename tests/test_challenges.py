@@ -76,6 +76,7 @@ class TestChallengeCategories:
             "transportation",
             "crypto",
             "verification",
+            "corporate",
         ]
         for cat in categories:
             cat_dir = CHALLENGES_DIR / cat
@@ -84,4 +85,4 @@ class TestChallengeCategories:
 
     def test_minimum_challenge_count(self):
         all_challenges = get_challenge_files()
-        assert len(all_challenges) >= 20, f"Expected 20+ challenges, found {len(all_challenges)}"
+        assert len(all_challenges) >= 30, f"Expected 30+ challenges, found {len(all_challenges)}"
