@@ -50,6 +50,10 @@ Key scripts:
 - `analyze_email_headers.py` — Email header parsing and hop analysis
 - `query_blockchain.py` — Bitcoin/Ethereum address lookup
 - `discover_reddit_threads.py` — Reddit thread discovery for OSINT communities
+- `query_flightradar.py` — Aircraft tracking via OpenSky Network API (free, no key)
+- `query_ais.py` — Vessel/ship tracking via Fintraffic AIS API
+- `query_urlscan.py` — URLScan.io search for threat intelligence
+- `query_ipinfo.py` — IP geolocation and ASN lookup via ip-api.com
 
 ## MCP Servers
 

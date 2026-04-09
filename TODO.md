@@ -7,31 +7,21 @@ Items fully specified and ready to implement. Pick from here when working on fea
 ### References
 | Priority | Item | Type | Domain | Description |
 |----------|------|------|--------|-------------|
-| HIGH | document-analysis.md | reference | Documents | PDF metadata, email headers, Office document properties, steganography |
-| HIGH | vehicle-object-id.md | reference | Vehicles | License plate formats, aircraft (ADS-B/ICAO), ship tracking (AIS/MMSI) |
 | MEDIUM | crypto-financial.md | reference | Crypto | Blockchain explorers, wallet clustering, DeFi tracing, mixer detection |
 | MEDIUM | radio-signals.md | reference | Radio | SDR basics, amateur radio callsign lookup, broadcast identification |
-| MEDIUM | google-dorking-cheatsheet.md | reference | Search | Advanced Google operators for OSINT (site:, inurl:, filetype:, cache:) |
 | LOW | dark-web-research.md | reference | Dark web | Ahmia, onion scanning, .onion research ethics and legal boundaries |
 
 ### Scripts
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-| HIGH | query_flightradar.py | script | Aircraft lookup via OpenSky Network API (free, no key) |
-| HIGH | query_ais.py | script | Ship tracking via free marine traffic endpoints |
 | MEDIUM | query_virustotal.py | script | VirusTotal free API (needs free key, 4 req/min) |
-| MEDIUM | query_urlscan.py | script | URLScan.io search and submission (free) |
-| MEDIUM | query_ipinfo.py | script | IP geolocation and ASN lookup via ipinfo.io free tier |
 | LOW | query_wikidata_sparql.py | script | Wikidata SPARQL queries for entity resolution |
 | LOW | query_archive_today.py | script | archive.today snapshot search and retrieval |
 
 ### Challenges
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-| HIGH | challenges/geolocation/04-vegetation-clues.md | challenge | Identify location from vegetation and landscape |
-| HIGH | challenges/infrastructure/03-phishing-detection.md | challenge | Analyze a domain for phishing indicators |
 | MEDIUM | challenges/image-forensics/03-social-media-metadata.md | challenge | Track image origin across social platforms |
-| MEDIUM | challenges/multi-domain/03-ctf-style.md | challenge | Multi-step CTF-style OSINT challenge |
 | LOW | challenges/crypto/01-wallet-tracing.md | challenge | Trace cryptocurrency transactions |
 
 ### MCP Server
@@ -79,3 +69,13 @@ Items that have been implemented.
 | GitHub workflows (5) | 2026-04-09 | Initial commit |
 | Docker setup | 2026-04-09 | Initial commit |
 | Test suite | 2026-04-09 | Initial commit |
+| query_flightradar.py (OpenSky) | 2026-04-09 | Feature batch |
+| query_ais.py (Fintraffic AIS) | 2026-04-09 | Feature batch |
+| query_urlscan.py (URLScan.io) | 2026-04-09 | Feature batch |
+| query_ipinfo.py (ip-api.com) | 2026-04-09 | Feature batch |
+| document-analysis.md reference | 2026-04-09 | Feature batch |
+| vehicle-object-id.md reference | 2026-04-09 | Feature batch |
+| google-dorking-cheatsheet.md | 2026-04-09 | Feature batch |
+| geolocation/04-vegetation-clues | 2026-04-09 | Feature batch |
+| infrastructure/03-phishing-detection | 2026-04-09 | Feature batch |
+| multi-domain/03-ctf-style | 2026-04-09 | Feature batch |
