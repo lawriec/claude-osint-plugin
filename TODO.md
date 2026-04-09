@@ -14,6 +14,11 @@ Items fully specified and ready to implement. Pick from here when working on fea
 ### Scripts
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
+| HIGH | analyze_image_forensics.py | script | ELA via Pillow recompression + image enhancement (contrast/saturation/histogram equalization). Outputs images for Gemini to interpret. Pillow-only. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| HIGH | detect_steganography.py | script | LSB detection (stego-lsb), embedded file scanning (binwalk3), strings extraction, EOF analysis. All pip-installable. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_enf.py | script | ENF (Electrical Network Frequency) extraction via scipy + adaptive Goertzel algorithm, match against power-grid-frequency.org / UK NESO database. Determines when/where a recording was made. Needs ffmpeg for audio extraction. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_pdf_forensics.py | script | PDF keyword scanning (pdfid-style): detect JavaScript, /OpenAction, embedded files, redaction failures. pip: pdfid. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_office_forensics.py | script | MS Office/OLE2 analysis via oletools: VBA macro extraction (olevba), threat detection (oleid), embedded objects (oleobj). See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
 | MEDIUM | query_virustotal.py | script | VirusTotal free API (needs free key, 4 req/min) |
 | LOW | query_wikidata_sparql.py | script | Wikidata SPARQL queries for entity resolution |
 | LOW | query_archive_today.py | script | archive.today snapshot search and retrieval |
@@ -30,6 +35,8 @@ Items fully specified and ready to implement. Pick from here when working on fea
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
 | HIGH | mcp-osint-recon | MCP | Consolidate scripts into TypeScript MCP with caching and rate limiting |
+| HIGH | ffmpeg MCP server | MCP | Add `ffmpeg-mcp` or `@iflow-mcp/mcp-ffmpeg` to `.mcp.json`. Unlocks deep video metadata, audio extraction (prerequisite for ENF), codec analysis. Multiple npm packages available. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | opencv-mcp-server | MCP | Add `opencv-mcp-server` (pip) — edge detection (Canny/Sobel/Laplacian), face detection, feature detection, contour analysis. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
 
 ## Needs Research
 
@@ -40,7 +47,9 @@ Items that need investigation before implementation.
 | Shodan full API MCP | Is there an existing MCP? What's the free tier? Worth building vs. using InternetDB? |
 | VirusTotal MCP | Multiple endpoints (URL scan, file scan, domain). Is the free tier useful enough? |
 | Censys MCP | Internet-wide scanning data. Free tier research needed. |
-| Image ELA tool | Best approach for Error Level Analysis? Python library or external tool? |
+| Image ELA tool | **RESEARCHED** — Pillow `ImageChops.difference()` after JPEG recompression. ~50 lines. Moved to Ready to Build as `analyze_image_forensics.py`. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| ExifTool migration | Replace `exifread` with `PyExifTool` (pip) wrapping Phil Harvey's ExifTool? Goes from ~8 image formats to 400+ file types (video, audio, PDF, Office). Trade-off: requires `exiftool` binary. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| ENF analysis feasibility | **RESEARCHED** — Multiple Python implementations exist (ENFormant/Bellingcat, ENF-Extractor, libhum). Public grid databases available (UK NESO, power-grid-frequency.org, Zenodo 2014-2022). Needs 3+ min recordings with mains hum. Moved to Ready to Build. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
 | Maltego-style transforms | Can we build entity expansion as an MCP? What's the architecture? |
 | Face recognition ethics | PimEyes and similar tools — should we include guidance? Legal issues? |
 | SearXNG alternatives | Self-hosted vs. public instances. Docker setup documentation needed? |
