@@ -1,8 +1,64 @@
 {
   "name": "osint",
   "description": "Open source intelligence (OSINT) research skill — investigate people, locations, domains, images, infrastructure, and digital artifacts using publicly available information",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "lawriec"
+  },
+  "userConfig": {
+    "TAVILY_API_KEY": {
+      "type": "string",
+      "title": "Tavily API key",
+      "description": "Tavily API key for focused web search and content extraction. Get one at https://tavily.com. Leave blank to disable the tavily MCP server.",
+      "sensitive": true
+    },
+    "GEMINI_API_KEY": {
+      "type": "string",
+      "title": "Google Gemini API key",
+      "description": "Google Gemini API key for AI analysis of images, video, and audio. Get one at https://aistudio.google.com/apikey. Leave blank to disable the gemini MCP server.",
+      "sensitive": true
+    },
+    "GOOGLE_VISION_API_KEY": {
+      "type": "string",
+      "title": "Google Cloud Vision API key",
+      "description": "Google Cloud Vision API key for reverse image search. Enable the Cloud Vision API at https://console.cloud.google.com/apis/credentials. Free tier 1000 calls/month. Leave blank to disable the google-reverse-image MCP server.",
+      "sensitive": true
+    },
+    "SEARXNG_URL": {
+      "type": "string",
+      "title": "SearXNG URL",
+      "description": "URL of your SearXNG instance for multi-engine web search. Defaults to http://localhost:8080. See https://github.com/lawriec/mcp-searxng for Docker setup. Leave blank to use the default.",
+      "sensitive": false
+    },
+    "YTDLP_COOKIES_FROM_BROWSER": {
+      "type": "string",
+      "title": "yt-dlp cookies — browser name",
+      "description": "Optional: browser name (chrome, firefox, edge, safari, opera, brave, chromium) for yt-dlp to read YouTube cookies from. Strongly recommended for sustained yt-dlp use — without cookies, YouTube blocks most requests. Leave blank to skip.",
+      "sensitive": false
+    },
+    "YTDLP_COOKIES_FILE": {
+      "type": "string",
+      "title": "yt-dlp cookies — file path",
+      "description": "Optional: absolute path to a Netscape-format cookies.txt file for yt-dlp. Takes priority over YTDLP_COOKIES_FROM_BROWSER if both are set. Required for the Docker container (no host browser available). Leave blank to skip.",
+      "sensitive": false
+    },
+    "REDDIT_CLIENT_ID": {
+      "type": "string",
+      "title": "Reddit OAuth client ID",
+      "description": "Optional: Reddit OAuth client ID for higher rate limits on the reddit MCP. Create one at https://www.reddit.com/prefs/apps. Leave blank to use anonymous mode (works but rate-limited).",
+      "sensitive": false
+    },
+    "REDDIT_CLIENT_SECRET": {
+      "type": "string",
+      "title": "Reddit OAuth client secret",
+      "description": "Optional: Reddit OAuth client secret matching REDDIT_CLIENT_ID. Leave blank to skip.",
+      "sensitive": true
+    },
+    "REDDIT_REFRESH_TOKEN": {
+      "type": "string",
+      "title": "Reddit OAuth refresh token",
+      "description": "Optional: Reddit OAuth refresh token for persistent authentication. Leave blank to skip.",
+      "sensitive": true
+    }
   }
 }

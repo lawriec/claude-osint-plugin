@@ -64,7 +64,7 @@ Key scripts:
 
 Twelve MCP servers are configured. Three require API keys via environment variables (`TAVILY_API_KEY`, `GEMINI_API_KEY`, `GOOGLE_VISION_API_KEY` for `google-reverse-image`). The `searxng` server accepts `SEARXNG_URL` (defaults to `http://localhost:8080`). The `yt-dl` server accepts `YTDLP_COOKIES_FROM_BROWSER` or `YTDLP_COOKIES_FILE` for YouTube authentication. The `reddit` server optionally accepts `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_REFRESH_TOKEN`. The `fetch` and `reddit` servers use `uvx` (Python); all others use `npx`.
 
-`.mcp.json` uses shell-style `${VAR:-default}` substitution so env vars are expanded from the shell environment at MCP launch — no rebuild needed when keys change.
+`.mcp.json` uses shell-style `${VAR:-default}` substitution so env vars are expanded from the shell environment at MCP launch — no rebuild needed when keys change. The plugin's `plugin.json` declares a `userConfig` block so `/plugin install` prompts for these keys interactively and persists them in `~/.claude/.credentials.json`. Keys also resolve from the surrounding shell environment, so either path works.
 
 ## Plugin Installation
 

@@ -86,6 +86,24 @@ pass cookies as a file path. Without cookies, YouTube aggressively blocks `yt-dl
      osint-agent
    ```
 
+## Script-Specific API Keys (VirusTotal, Censys)
+
+`query_virustotal.py` and `query_censys.py` read keys from the shell environment,
+not from the plugin's userConfig (which only handles MCP servers). Pass them as
+docker `-e` flags if you want those scripts to work:
+
+```bash
+docker run -it --rm \
+  --shm-size=1g \
+  -e VT_API_KEY="$VT_API_KEY" \
+  -e CENSYS_API_ID="$CENSYS_API_ID" \
+  -e CENSYS_API_SECRET="$CENSYS_API_SECRET" \
+  -v osint-claude-config:/home/node/.claude \
+  -v osint-investigations:/home/node/investigations \
+  -v osint-npm-cache:/home/node/.npm \
+  osint-agent
+```
+
 ## Self-Hosted SearXNG
 
 The `searxng` MCP defaults to `http://localhost:8080`, which won't reach a SearXNG
