@@ -12,7 +12,11 @@ _No references currently in backlog._
 
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-_No scripts currently in backlog._
+| HIGH | analyze_image_forensics.py | script | Pillow-based ELA + image enhancement (contrast/saturation/histogram equalization) for Gemini interpretation. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| HIGH | detect_steganography.py | script | LSB detection (stego-lsb), embedded file scanning (binwalk3), strings extraction, EOF analysis. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_enf.py | script | Electrical Network Frequency extraction (scipy + adaptive Goertzel), match against power-grid-frequency.org / UK NESO. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_pdf_forensics.py | script | PDF keyword scanning (pdfid-style): JavaScript, /OpenAction, embedded files, redaction failures. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
+| MEDIUM | analyze_office_forensics.py | script | MS Office/OLE2 analysis via oletools: VBA macros (olevba), threat detection (oleid), embedded objects (oleobj). See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
 
 ### Challenges
 
