@@ -432,16 +432,17 @@ v=DMARC1; p=reject; rua=mailto:dmarc-reports@domain.com; ruf=mailto:forensics@do
 4. **DNS infrastructure** — Shared hosting with many suspicious domains?
 5. **Certificate** — Let's Encrypt (free, automated) vs. commercial CA
 6. **Shodan** — Unexpected open ports, known vulnerabilities
-7. **VirusTotal** — Check domain/IP reputation
-8. **URLScan.io** — Safe sandbox scanning of suspicious URLs
+7. **VirusTotal** — Check domain/IP reputation (`uv run query_virustotal.py domain <domain>` or `ip <ip>`)
+8. **URLScan.io** — Safe sandbox scanning of suspicious URLs (`uv run query_urlscan.py search "domain:<domain>"`)
 
 ### Pattern: Map an organization's attack surface
 
 1. Find all domains via reverse WHOIS, Google dorking, CT logs
 2. Enumerate subdomains for each domain via CT and DNS
 3. Resolve all hostnames to IPs
-4. Enrich each IP via Shodan InternetDB
-5. Identify exposed services and potential vulnerabilities
+4. Enrich each IP via Shodan InternetDB (`uv run query_shodan_internetdb.py <ip>`)
+5. Geolocate and classify each IP (`uv run query_ipinfo.py geo <ip>` and `asn <ip>`)
+6. Identify exposed services and potential vulnerabilities
 6. Map relationships between assets
 
 ### Pattern: Trace domain ownership changes

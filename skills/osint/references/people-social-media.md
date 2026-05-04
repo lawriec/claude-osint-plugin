@@ -109,6 +109,9 @@ Finding the same person across platforms:
 4. The timezone where the quiet period maps to sleeping hours is likely their timezone
 5. Multiple platforms strengthen the estimate
 
+**Entity Enrichment via Wikidata:**
+For public figures, use `uv run query_wikidata_sparql.py entity "<name>"` to get structured data (birth date, nationality, occupation, employer, education) from Wikidata. Follow up with `properties <QID>` for detailed attributes and `related <QID>` for connected entities.
+
 ---
 
 ## Google Dorking for People

@@ -1,56 +1,75 @@
 name: Lint
+
 on:
   push:
-    branches: ["**"]
   pull_request:
-    branches: ["**"]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
 
 jobs:
-  lint:
+  auto-fix:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    if: github.event.pull_request.user.login != 'claude[bot]'
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # --- Python: ruff lint + format ---
       - uses: astral-sh/setup-uv@v6
 
-      - name: Auto-fix Python
+      - name: Ruff auto-fix
         run: |
-          uv tool run ruff check --fix skills/osint/scripts/ tests/
-          uv tool run ruff format skills/osint/scripts/ tests/
+          uvx ruff check --fix skills/osint/scripts/ tests/ || true
+          uvx ruff format skills/osint/scripts/ tests/
 
+      # --- JSON: validate syntax ---
       - name: Validate JSON
         run: |
-          python3 -c "import json; json.load(open('.mcp.json'))"
-          python3 -c "import json; json.load(open('.claude-plugin/plugin.json'))"
-          python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
+          for f in .mcp.json .claude-plugin/plugin.json .claude-plugin/marketplace.json; do
+            if [ -f "$f" ]; then
+              python3 -m json.tool "$f" > /dev/null || echo "::error file=$f::Invalid JSON"
+            fi
+          done
 
+      # --- Commit auto-fixes if any (skip on default branch) ---
       - name: Commit auto-fixes
+        id: commit-fixes
+        if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch) && github.actor != 'github-actions[bot]'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git diff --staged --quiet || git commit -m "style: auto-fix lint issues"
-          git push || true
-
-      - name: Check for remaining issues
-        id: check
-        run: |
-          uv tool run ruff check skills/osint/scripts/ tests/ 2>&1 | tee /tmp/ruff-output.txt || true
-          if [ -s /tmp/ruff-output.txt ]; then
-            echo "has_issues=true" >> "$GITHUB_OUTPUT"
+          if [ -n "$(git diff --name-only)" ]; then
+            git add -A
+            git commit -m "style: auto-fix lint issues (ruff)"
+            git push
+            echo "fixed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "fixed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Fix remaining issues with Claude
-        if: steps.check.outputs.has_issues == 'true'
-        uses: anthropics/claude-code-action@v1
-        with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
-            Ruff found lint issues that auto-fix couldn't resolve. Read the output below and fix them manually:
-            $(cat /tmp/ruff-output.txt)
-            Fix the issues, then run `ruff check` again to verify.
+      # --- Check for remaining issues that tools couldn't fix ---
+      - name: Check remaining issues
+        run: |
+          set -o pipefail
+          issues=false
+
+          echo "## Ruff check" >> "$GITHUB_STEP_SUMMARY"
+          if ! uvx ruff check skills/osint/scripts/ tests/ 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"; then
+            issues=true
+          fi
+
+          echo "## Ruff format" >> "$GITHUB_STEP_SUMMARY"
+          if ! uvx ruff format --check skills/osint/scripts/ tests/ 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"; then
+            issues=true
+          fi
+
+          # On the default branch, fail the workflow so lint issues are visible
+          if [ "$issues" = "true" ] && [ "${{ github.ref }}" = "refs/heads/${{ github.event.repository.default_branch }}" ]; then
+            echo "::error::Lint issues found on default branch — see step summary above"
+            exit 1
+          fi

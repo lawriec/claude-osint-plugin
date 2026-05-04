@@ -54,10 +54,17 @@ Key scripts:
 - `query_ais.py` — Vessel/ship tracking via Fintraffic AIS API
 - `query_urlscan.py` — URLScan.io search for threat intelligence
 - `query_ipinfo.py` — IP geolocation and ASN lookup via ip-api.com
+- `query_virustotal.py` — VirusTotal v3 API (domain, IP, URL, hash reports; needs VT_API_KEY)
+- `query_wikidata_sparql.py` — Wikidata entity search and SPARQL queries for entity resolution
+- `query_archive_today.py` — archive.today snapshot search and retrieval
+- `query_censys.py` — Censys host search and IP details (needs CENSYS_API_ID/SECRET)
+- `image_ela.py` — Error Level Analysis for image manipulation detection (Pillow-based)
 
 ## MCP Servers
 
-Eleven MCP servers are configured. Two require API keys via environment variables (`TAVILY_API_KEY`, `GEMINI_API_KEY`). The `yt-dl` server accepts `YTDLP_COOKIES_FROM_BROWSER` or `YTDLP_COOKIES_FILE` for YouTube authentication. The `reddit` server optionally accepts `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_REFRESH_TOKEN`. The `fetch` and `reddit` servers use `uvx` (Python); all others use `npx`.
+Twelve MCP servers are configured. Three require API keys via environment variables (`TAVILY_API_KEY`, `GEMINI_API_KEY`, `GOOGLE_VISION_API_KEY` for `google-reverse-image`). The `searxng` server accepts `SEARXNG_URL` (defaults to `http://localhost:8080`). The `yt-dl` server accepts `YTDLP_COOKIES_FROM_BROWSER` or `YTDLP_COOKIES_FILE` for YouTube authentication. The `reddit` server optionally accepts `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_REFRESH_TOKEN`. The `fetch` and `reddit` servers use `uvx` (Python); all others use `npx`.
+
+`.mcp.json` uses shell-style `${VAR:-default}` substitution so env vars are expanded from the shell environment at MCP launch — no rebuild needed when keys change.
 
 ## Plugin Installation
 

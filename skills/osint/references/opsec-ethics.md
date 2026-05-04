@@ -129,6 +129,22 @@ When uncertain about an action, apply this test:
 | Accessing breach data on forums | Gray area — varies by jurisdiction | Avoid |
 | Referencing breach data in reports | Generally okay if sourced from HIBP | Note the source clearly |
 
+### Facial Recognition and Biometric Tools
+
+| Tool | What It Does | Ethical/Legal Status |
+|------|-------------|---------------------|
+| **PimEyes** | Reverse face search across the internet | Legal in most jurisdictions but ethically controversial; banned in some EU contexts |
+| **Clearview AI** | Law enforcement facial recognition | Restricted to LE in most countries; fined by multiple EU DPAs |
+| **FaceCheck.ID** | Face search engine | Similar concerns to PimEyes |
+| **Google Lens / Yandex** | General reverse image search (may match faces) | Generally acceptable; not purpose-built for face recognition |
+
+**Guidance for this plugin:**
+- We do **not** include facial recognition tools or scripts in this plugin
+- Reverse image search (Google Lens, Yandex, TinEye) is acceptable — it matches images, not biometric data
+- If an investigation requires facial recognition, document the justification and legal basis before proceeding
+- Be aware that biometric data processing has stricter legal requirements under GDPR Article 9 and Illinois BIPA
+- Many facial recognition services scrape social media in violation of platform ToS — results may be legally tainted
+
 ---
 
 ## OPSEC for Investigators

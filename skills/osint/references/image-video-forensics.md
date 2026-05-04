@@ -158,6 +158,7 @@ ELA reveals areas of an image with different compression levels, which may indic
 4. Edited regions appear as brighter areas in the ELA image
 
 **Tools:**
+- **`uv run image_ela.py analyze <image>`** — Local ELA with statistics and visualization output
 - **FotoForensics** (fotoforensics.com) — Upload image for automated ELA
 - **Ghiro** — Batch image forensics
 - **GIMP/Photoshop** — Manual ELA by re-saving and differencing

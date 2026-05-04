@@ -69,26 +69,31 @@ tavily_crawl(url="https://example.com", max_depth=2, limit=50)
 
 | Field | Details |
 |-------|---------|
-| **What** | Meta-search across multiple engines (Google, Bing, DuckDuckGo, etc.) |
-| **When** | Broad exploration; when tavily misses results; when you want diverse sources |
-| **MCP** | `searxng` server |
+| **What** | Meta-search across multiple engines (Google, Bing, Brave, DuckDuckGo, Yahoo, 250+ others) via self-hosted SearXNG |
+| **When** | Broad exploration; when tavily misses results; when you want diverse sources or operator-based filters |
+| **MCP** | `searxng` server (set `SEARXNG_URL`, defaults to `http://localhost:8080`) |
 
 **Example usage:**
 ```
-searxng_search(query="\"john.doe\" email", categories="general", engines="google,bing,duckduckgo")
+searxng_search(query="\"john.doe\" email", categories=["general"])
+searxng_search(query="quarterly report", site="example.com", filetype="pdf", after="2025-01-01")
+searxng_search(query="leak", inurl="paste", intitle="dump")
 ```
 
 **Key parameters:**
-- `categories`: "general", "images", "news", "videos", "files", "social media"
-- `engines`: comma-separated engine list
-- `language`: language code (e.g., "en", "de")
-- `time_range`: "day", "week", "month", "year"
+- `categories`: array — `general`, `images`, `videos`, `news`, `music`, `files`, `social_media`, `science`, `it`, `map`
+- `language`: language code (e.g., `en`, `de`) or `all`
+- `time_range`: `day`, `month`, `year`
+- `pageno`: page number (default 1)
+- `max_results`: 1–100 (default 20)
+- **Operator parameters** (passed through to engines): `site`, `filetype`, `after`, `before`, `inurl`, `intitle`
+- `region`: VPN exit region (only when VPN is configured — use `searxng_vpn_regions` to list)
 
 **Gotchas:**
-- Great for image search across multiple engines
-- Can search specific categories like "social media"
-- Results may be less curated than tavily
-- Use `searxng_engines` to list available engines
+- Engine selection is now automatic — no `engines` parameter; SearXNG uses all enabled engines and self-heals
+- Reverse image search has been removed from this MCP — use `google-reverse-image` instead, or pass an image URL as the query to text-match where it appears
+- Categories are an array, not a string
+- Results may be less curated than Tavily; aggregated with engine attribution
 
 ### fetch
 
@@ -130,6 +135,31 @@ ask_question_about_video(file_path="/path/to/image.jpg", question="What text is 
 - Good for reading text in screenshots, identifying landmarks, describing scenes
 - Provide specific questions for better results
 - Use for EXIF-stripped images where metadata is unavailable
+
+### google-reverse-image reverse_image_search
+
+| Field | Details |
+|-------|---------|
+| **What** | Reverse image search via Google Cloud Vision Web Detection — the same backend that powers Google Images' reverse search UI |
+| **When** | Finding pages where an image appears, exact/partial matches, visually similar images, web entities, best-guess label |
+| **MCP** | `google-reverse-image` server (set `GOOGLE_VISION_API_KEY`) |
+
+**Example usage:**
+```
+reverse_image_search(file_path="/path/to/photo.jpg")
+reverse_image_search(image_url="https://example.com/photo.jpg", max_results=30)
+```
+
+**Key parameters:**
+- `file_path` OR `image_url` (exactly one) — local image (max 7 MB) or public HTTPS URL
+- `max_results`: 1–50 per result section (default 20)
+
+**What it returns:** Pages with the image, full/partial matching images, visually similar images, web entities, best-guess label.
+
+**Gotchas:**
+- Requires a Google Cloud project with billing enabled and the Cloud Vision API enabled (free tier: 1000 calls/month)
+- API key must be unrestricted by referrer (stdio MCPs send no referrer); restrict by API instead
+- For UI-driven workflows (Google Lens, Yandex), use `selenium` to drive a browser instead
 
 ### video-reader (extract_frames / extract_frame_at_timestamp / generate_thumbnail_grid)
 
@@ -453,6 +483,100 @@ Run via `uv run skills/osint/scripts/<name>`. These are purpose-built Python scr
 
 **What it reveals:** Relevant threads from OSINT-focused subreddits.
 
+### query_flightradar.py
+
+| Field | Details |
+|-------|---------|
+| **What** | Aircraft tracking via the OpenSky Network API |
+| **When** | Identifying aircraft by registration/callsign, tracking flights, analyzing airport traffic |
+| **Usage** | `uv run skills/osint/scripts/query_flightradar.py aircraft N12345` or `flights --bbox 45,5,55,15` or `airport EGLL departures` |
+
+**What it reveals:** Live aircraft positions, flight paths, airport arrivals/departures, aircraft metadata. Free, no API key required.
+
+### query_ais.py
+
+| Field | Details |
+|-------|---------|
+| **What** | Vessel/ship tracking via Fintraffic AIS API |
+| **When** | Identifying vessels in the Baltic Sea, tracking ship movements |
+| **Usage** | `uv run skills/osint/scripts/query_ais.py vessels --mmsi 123456789` or `vessels --name "SHIP NAME"` |
+
+**What it reveals:** Vessel position, speed, heading, destination, ship type, MMSI/IMO identifiers. Coverage limited to Baltic Sea region.
+
+### query_urlscan.py
+
+| Field | Details |
+|-------|---------|
+| **What** | URLScan.io domain and IP intelligence |
+| **When** | Threat assessment of suspicious URLs/domains; checking if a site has been flagged |
+| **Usage** | `uv run skills/osint/scripts/query_urlscan.py search "domain:example.com"` or `result <uuid>` |
+
+**What it reveals:** Prior scan results, verdicts, page content, redirects, screenshots, hosting infrastructure. Free for searches (no API key needed).
+
+### query_ipinfo.py
+
+| Field | Details |
+|-------|---------|
+| **What** | IP geolocation and ASN lookup via ip-api.com |
+| **When** | Geolocating IPs, identifying hosting providers, detecting proxies/VPNs |
+| **Usage** | `uv run skills/osint/scripts/query_ipinfo.py geo 8.8.8.8` or `asn 8.8.8.8` or `batch 1.1.1.1 8.8.8.8` |
+
+**What it reveals:** Country, city, ISP, organization, ASN, reverse DNS, hosting/proxy/mobile flags. Supports batch lookups (up to 100 IPs).
+
+### query_virustotal.py
+
+| Field | Details |
+|-------|---------|
+| **What** | VirusTotal v3 API for threat intelligence |
+| **When** | Checking domain/IP/URL/file reputation; malware analysis |
+| **Usage** | `uv run skills/osint/scripts/query_virustotal.py domain example.com` or `ip 1.2.3.4` or `url https://...` or `hash <sha256>` |
+| **Auth** | Requires `VT_API_KEY` environment variable (free tier: 4 requests/min) |
+
+**What it reveals:** Detection stats (malicious/suspicious/clean), WHOIS data, DNS records, community reputation, file analysis results.
+
+### query_wikidata_sparql.py
+
+| Field | Details |
+|-------|---------|
+| **What** | Wikidata entity search and SPARQL queries |
+| **When** | Entity resolution — identifying people, organizations, places; enriching knowledge graphs |
+| **Usage** | `uv run skills/osint/scripts/query_wikidata_sparql.py entity "Angela Merkel"` or `properties Q567` or `related Q567` |
+
+**What it reveals:** Wikidata QIDs, descriptions, aliases, structured properties (birth date, nationality, employer, education), related entities.
+
+### query_archive_today.py
+
+| Field | Details |
+|-------|---------|
+| **What** | archive.today snapshot search and retrieval |
+| **When** | Finding preserved copies of web pages; complementing Wayback Machine with archive.today |
+| **Usage** | `uv run skills/osint/scripts/query_archive_today.py search https://example.com` or `newest https://...` or `oldest https://...` |
+
+**What it reveals:** Snapshot URLs, timestamps, and original URLs from archive.today/archive.ph.
+
+### query_censys.py
+
+| Field | Details |
+|-------|---------|
+| **What** | Censys Search API for host intelligence |
+| **When** | Enriching IP data beyond Shodan InternetDB; searching for hosts by services, location, or software |
+| **Usage** | `uv run skills/osint/scripts/query_censys.py host 8.8.8.8` or `search "services.service_name: HTTP"` |
+| **Auth** | Requires `CENSYS_API_ID` and `CENSYS_API_SECRET` environment variables (free: 250 queries/month at censys.io) |
+
+**What it reveals:** Services (port, protocol, software), location (country, city, coordinates), autonomous system (ASN, organization), operating system, DNS records.
+
+### image_ela.py
+
+| Field | Details |
+|-------|---------|
+| **What** | Error Level Analysis for detecting image manipulation |
+| **When** | Checking if an image has been edited; forensic analysis of photos |
+| **Usage** | `uv run skills/osint/scripts/image_ela.py analyze photo.jpg` or `compare img1.jpg img2.jpg` or `metadata photo.jpg` |
+
+**What it reveals:** ELA visualization (saved as PNG), error statistics (mean, max, std dev per channel), manipulation assessment. High-error patches indicate areas that were edited at a different compression level than the surrounding image.
+
+**Gotchas:** ELA works best on JPEG images. PNGs and other lossless formats will show uniform error levels. Multiple re-saves degrade ELA accuracy.
+
 ---
 
 ## Tool Selection Quick Reference
@@ -473,6 +597,7 @@ Run via `uv run skills/osint/scripts/<name>`. These are purpose-built Python scr
 | Analyze email headers | `analyze_email_headers.py` |
 | Look up a crypto wallet | `query_blockchain.py` |
 | Analyze an image with AI | `gemini ask_question_about_video` |
+| Reverse image search | `google-reverse-image reverse_image_search` |
 | Extract video frames | `video-reader extract_frames` |
 | Screenshot a web page | `selenium take_screenshot` |
 | Interact with JS-heavy sites | `selenium` (full workflow) |
@@ -480,3 +605,12 @@ Run via `uv run skills/osint/scripts/<name>`. These are purpose-built Python scr
 | Search YouTube | `ytdlp_search_videos` |
 | Read Reddit threads | `reddit fetch_reddit_post_content` |
 | Verify sun position in photo | `sun_position.py` |
+| Track aircraft/flights | `query_flightradar.py` |
+| Track ships/vessels | `query_ais.py` |
+| Scan a URL for threats | `query_urlscan.py` |
+| Geolocate an IP address | `query_ipinfo.py` |
+| Check domain/file reputation | `query_virustotal.py` |
+| Resolve entities (people/orgs) | `query_wikidata_sparql.py` |
+| Find archived web pages | `query_archive_today.py` |
+| Scan host with Censys | `query_censys.py` |
+| Detect image manipulation | `image_ela.py` |

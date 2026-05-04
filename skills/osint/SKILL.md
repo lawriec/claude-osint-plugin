@@ -32,6 +32,7 @@ All reference files live in `references/`. Load them on demand — do not read t
 
 | Situation | Read |
 |---|---|
+| **Starting any new investigation** | **`quick-start.md`** |
 | Setting up or resuming an investigation | `investigation-setup.md` |
 | Understanding the OSINT intelligence cycle | `osint-cycle.md` |
 | Knowledge graph operations | `knowledge-graph.md` |
@@ -48,6 +49,9 @@ All reference files live in `references/`. Load them on demand — do not read t
 | Vehicle, aircraft, ship identification | `vehicle-object-id.md` |
 | Cryptocurrency and blockchain analysis | `crypto-financial.md` |
 | Radio signals and broadcast identification | `radio-signals.md` |
+| Dark web research methodology and OPSEC | `dark-web-research.md` |
+| Google dorking operators and patterns | `google-dorking-cheatsheet.md` |
+| OSINT communities, training, and resources | `osint-landscape.md` |
 
 
 ## Before You Start: Ethics and OPSEC
@@ -145,7 +149,7 @@ Systematic narrowing from broad to specific:
 4. **Specific identifiers** — Business names, phone numbers, addresses, landmarks.
 5. **Verification** — Cross-reference with satellite imagery, street view, local maps.
 
-Use Gemini for image analysis (it handles visual question-answering well). Use `sun_position.py` for shadow-based time/location estimation. Use SearXNG or Google Lens for reverse image search to find matching locations.
+Use Gemini for image analysis (it handles visual question-answering well). Use `sun_position.py` for shadow-based time/location estimation. Use `google-reverse-image` (Cloud Vision Web Detection) for reverse image search to find matching locations, or `selenium` to drive Google Lens / Yandex when you need a UI-driven workflow.
 
 Read `geolocation.md` for the full methodology, including worked examples.
 
@@ -256,9 +260,10 @@ The most commonly used tools. For full details, fallback options, and troublesho
 
 | Need | Tool/Script | Notes |
 |---|---|---|
-| Web search | `tavily_search`, `searxng_search` | Tavily for focused queries, SearXNG for broad/image search |
+| Web search | `tavily_search`, `searxng_search` | Tavily for focused queries; SearXNG for broad multi-engine with operator params (site, filetype, after, before, inurl, intitle) |
 | Image analysis | `gemini` (`ask_question_about_video`) | Works for both still images and video; strong at visual QA |
-| Reverse image search | `selenium` (navigate to Google Lens/Yandex) | Automate browser-based reverse search |
+| Reverse image search | `google-reverse-image` (`reverse_image_search`) | Cloud Vision Web Detection — pages with the image, exact/partial matches, visually similar |
+| Reverse image (browser) | `selenium` (navigate to Google Lens/Yandex) | Fallback when Vision misses or you need a UI-driven workflow |
 | Website screenshots | `selenium` (`take_screenshot`) | Document visual evidence of web pages |
 | Historical pages | `internet-archive`, `common-crawl` | Wayback Machine snapshots, historical crawl data |
 | Video metadata | `yt-dl` (`ytdlp_get_video_metadata`) | YouTube and many other video platforms |
@@ -269,13 +274,25 @@ The most commonly used tools. For full details, fallback options, and troublesho
 | EXIF extraction | `uv run extract_exif.py` | GPS coordinates, camera info, timestamps, software |
 | Username check | `uv run check_username.py` | Test username existence across many platforms |
 | Sun position | `uv run sun_position.py` | Calculate sun angle for shadow-based geolocation |
+| Email headers | `uv run analyze_email_headers.py` | Parse email hops, extract originating IPs, detect spoofing |
+| IP geolocation | `uv run query_ipinfo.py` | Geo, ASN, hosting/proxy flags via ip-api.com (batch support) |
+| URL scanning | `uv run query_urlscan.py` | URLScan.io domain/IP intelligence (free, no key for search) |
+| Blockchain | `uv run query_blockchain.py` | Bitcoin/Ethereum address balance and transaction lookup |
+| Aircraft tracking | `uv run query_flightradar.py` | OpenSky Network — live flights, aircraft lookup, airport traffic |
+| Vessel tracking | `uv run query_ais.py` | Fintraffic AIS — Baltic Sea vessel positions and metadata |
+| Reddit discovery | `uv run discover_reddit_threads.py` | Find OSINT-relevant threads across subreddits |
+| VirusTotal | `uv run query_virustotal.py` | Domain/IP/URL/hash threat reports (needs VT_API_KEY) |
+| Wikidata | `uv run query_wikidata_sparql.py` | Entity resolution, SPARQL queries for people/orgs/places |
+| archive.today | `uv run query_archive_today.py` | Search/retrieve archive.today snapshots |
+| Censys | `uv run query_censys.py` | Host search and IP detail lookup (needs CENSYS_API_ID/SECRET) |
+| Image ELA | `uv run image_ela.py` | Error Level Analysis for detecting image manipulation |
 | Knowledge graph | `memory-graph` tools | Track entities, relationships, and observations |
 | Reddit research | `reddit` tools | Fetch threads, post content from subreddits |
 | Fetch web page | `fetch` | Retrieve raw page content for analysis |
 | Video frames | `video-reader` (`extract_frames`) | Pull frames from video for image analysis |
 
 **Tool selection principles:**
-- Use Tavily for precise factual queries. Use SearXNG for broad exploration and image search.
+- Use Tavily for precise factual queries. Use SearXNG for broad multi-engine exploration with structured operators. Use `google-reverse-image` for reverse image search.
 - Always try the purpose-built script first (e.g., `query_dns.py` for DNS). Fall back to web-based tools if the script fails.
 - Use Selenium for anything requiring a real browser (JavaScript-heavy sites, CAPTCHAs, interactive tools).
 - Use the knowledge graph (`memory-graph`) throughout — it is how you track what you have found and how it connects.

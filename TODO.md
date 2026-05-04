@@ -5,54 +5,36 @@
 Items fully specified and ready to implement. Pick from here when working on features.
 
 ### References
-| Priority | Item | Type | Domain | Description |
-|----------|------|------|--------|-------------|
-| MEDIUM | crypto-financial.md | reference | Crypto | Blockchain explorers, wallet clustering, DeFi tracing, mixer detection |
-| MEDIUM | radio-signals.md | reference | Radio | SDR basics, amateur radio callsign lookup, broadcast identification |
-| LOW | dark-web-research.md | reference | Dark web | Ahmia, onion scanning, .onion research ethics and legal boundaries |
+
+_No references currently in backlog._
 
 ### Scripts
+
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
-| HIGH | analyze_image_forensics.py | script | ELA via Pillow recompression + image enhancement (contrast/saturation/histogram equalization). Outputs images for Gemini to interpret. Pillow-only. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| HIGH | detect_steganography.py | script | LSB detection (stego-lsb), embedded file scanning (binwalk3), strings extraction, EOF analysis. All pip-installable. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| MEDIUM | analyze_enf.py | script | ENF (Electrical Network Frequency) extraction via scipy + adaptive Goertzel algorithm, match against power-grid-frequency.org / UK NESO database. Determines when/where a recording was made. Needs ffmpeg for audio extraction. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| MEDIUM | analyze_pdf_forensics.py | script | PDF keyword scanning (pdfid-style): detect JavaScript, /OpenAction, embedded files, redaction failures. pip: pdfid. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| MEDIUM | analyze_office_forensics.py | script | MS Office/OLE2 analysis via oletools: VBA macro extraction (olevba), threat detection (oleid), embedded objects (oleobj). See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| MEDIUM | query_virustotal.py | script | VirusTotal free API (needs free key, 4 req/min) |
-| LOW | query_wikidata_sparql.py | script | Wikidata SPARQL queries for entity resolution |
-| LOW | query_archive_today.py | script | archive.today snapshot search and retrieval |
+_No scripts currently in backlog._
 
 ### Challenges
-| Priority | Item | Type | Description |
-|----------|------|------|-------------|
-| MEDIUM | challenges/multi-domain/05-github-forensics.md | challenge | Investigate a GitHub user via commits, emails, linked repos |
-| MEDIUM | challenges/geolocation/08-ip-camera-discovery.md | challenge | Identify location from IP camera stream clues (Shodan + geolocation) |
-| MEDIUM | challenges/corporate/02-executive-verification.md | challenge | Verify executive claims via LinkedIn, registries, filings |
-| LOW | challenges/verification/05-deepfake-detection.md | challenge | Identify manipulated/AI-generated media via forensic analysis |
+
+_No challenges currently in backlog._
 
 ### MCP Server
 | Priority | Item | Type | Description |
 |----------|------|------|-------------|
 | HIGH | mcp-osint-recon | MCP | Consolidate scripts into TypeScript MCP with caching and rate limiting |
-| HIGH | ffmpeg MCP server | MCP | Add `ffmpeg-mcp` or `@iflow-mcp/mcp-ffmpeg` to `.mcp.json`. Unlocks deep video metadata, audio extraction (prerequisite for ENF), codec analysis. Multiple npm packages available. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| MEDIUM | opencv-mcp-server | MCP | Add `opencv-mcp-server` (pip) — edge detection (Canny/Sobel/Laplacian), face detection, feature detection, contour analysis. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
 
 ## Needs Research
 
 Items that need investigation before implementation.
 
-| Item | Question |
-|------|----------|
-| Shodan full API MCP | Is there an existing MCP? What's the free tier? Worth building vs. using InternetDB? |
-| VirusTotal MCP | Multiple endpoints (URL scan, file scan, domain). Is the free tier useful enough? |
-| Censys MCP | Internet-wide scanning data. Free tier research needed. |
-| Image ELA tool | **RESEARCHED** — Pillow `ImageChops.difference()` after JPEG recompression. ~50 lines. Moved to Ready to Build as `analyze_image_forensics.py`. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| ExifTool migration | Replace `exifread` with `PyExifTool` (pip) wrapping Phil Harvey's ExifTool? Goes from ~8 image formats to 400+ file types (video, audio, PDF, Office). Trade-off: requires `exiftool` binary. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| ENF analysis feasibility | **RESEARCHED** — Multiple Python implementations exist (ENFormant/Bellingcat, ENF-Extractor, libhum). Public grid databases available (UK NESO, power-grid-frequency.org, Zenodo 2014-2022). Needs 3+ min recordings with mains hum. Moved to Ready to Build. See [#1](https://github.com/lawriec/claude-osint-plugin/issues/1) |
-| Maltego-style transforms | Can we build entity expansion as an MCP? What's the architecture? |
-| Face recognition ethics | PimEyes and similar tools — should we include guidance? Legal issues? |
-| SearXNG alternatives | Self-hosted vs. public instances. Docker setup documentation needed? |
+| Item | Question | Status |
+|------|----------|--------|
+| Shodan full API MCP | InternetDB covers most needs (free, no key). Full Shodan API needs paid key ($59/mo). Community MCP exists but untested. | Resolved — InternetDB sufficient; move full API to Blocked |
+| Censys MCP | Free tier: 250 queries/month, limited to search. Worth a script similar to query_shodan_internetdb.py. | Promotable — write query_censys.py |
+| Image ELA tool | Pillow can do ELA (compare JPEG recompression). FotoForensics.com is the reference. Script feasible ~100 lines. | Promotable — write image_ela.py |
+| Maltego-style transforms | Our memory-graph MCP + query_wikidata_sparql.py now cover entity expansion. Full Maltego architecture is overkill. | Resolved — covered by existing tools |
+| Face recognition ethics | PimEyes is legal in most jurisdictions but ethically fraught. Add guidance note to opsec-ethics.md, don't build tools. | Resolved — add ethics note only |
+| SearXNG | Already configured as MCP server in .mcp.json (Docker instance at localhost:8888). Works. | Resolved — already operational |
 
 ## Blocked
 
@@ -61,7 +43,7 @@ Items waiting on external dependencies.
 | Item | Blocker |
 |------|---------|
 | TMDB MCP | Needs free API key (1 week approval process) |
-| Shodan full API | Needs paid API key for full search |
+| Shodan full API | Needs paid API key ($59/mo) for full search; InternetDB covers most use cases |
 | Discord server reading | Needs bot token or user cookie — ethical and TOS concerns |
 | Twitter/X API | No free read API. Workarounds exist but are fragile. |
 
@@ -110,3 +92,27 @@ Items that have been implemented.
 | geolocation/07-basic-whois-geolocation | 2026-04-09 | Challenge expansion v2 |
 | people/04-basic-social-footprint | 2026-04-09 | Challenge expansion v2 |
 | people/05-behavioral-pattern-analysis | 2026-04-09 | Challenge expansion v2 |
+| osint-landscape.md reference | 2026-04-09 | OSINT landscape guide |
+| crypto-financial.md reference | 2026-04-09 | Feature batch 2 |
+| radio-signals.md reference | 2026-04-09 | Feature batch 2 |
+| dark-web-research.md reference | 2026-04-09 | Feature batch 2 |
+| query_virustotal.py | 2026-04-09 | Feature batch 2 |
+| query_wikidata_sparql.py | 2026-04-09 | Feature batch 2 |
+| query_archive_today.py | 2026-04-09 | Feature batch 2 |
+| multi-domain/05-github-forensics | 2026-04-09 | Feature batch 2 |
+| geolocation/08-ip-camera-discovery | 2026-04-09 | Feature batch 2 |
+| corporate/02-executive-verification | 2026-04-09 | Feature batch 2 |
+| verification/05-deepfake-detection | 2026-04-09 | Feature batch 2 |
+| query_censys.py | 2026-04-09 | Integration batch |
+| image_ela.py | 2026-04-09 | Integration batch |
+| Face recognition ethics note | 2026-04-09 | Integration batch |
+| SKILL.md tool reference (all 19 scripts) | 2026-04-09 | Integration batch |
+| tool-guide.md (7 missing scripts added) | 2026-04-09 | Integration batch |
+| Cross-references in domain-infrastructure, platform-directory, people-social-media | 2026-04-09 | Integration batch |
+| Resolved 6/7 "Needs Research" items | 2026-04-09 | Integration batch |
+| infrastructure/07-censys-host-recon | 2026-04-09 | Coverage batch |
+| image-forensics/05-ela-manipulation-detection | 2026-04-09 | Coverage batch |
+| infrastructure/08-virustotal-threat-assessment | 2026-04-09 | Coverage batch |
+| people/06-wikidata-entity-resolution | 2026-04-09 | Coverage batch |
+| verification/06-archive-today-recovery | 2026-04-09 | Coverage batch |
+| CI: added pytest to lint.yml workflow | 2026-04-09 | Coverage batch |

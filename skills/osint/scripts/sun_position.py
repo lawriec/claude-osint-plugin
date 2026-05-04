@@ -50,7 +50,7 @@ def calculate_position(lat: float, lon: float, date_str: str, time_str: str, utc
         "sun_altitude_deg": round(altitude, 2),
         "sun_azimuth_deg": round(azimuth, 2),
         "sun_direction": cardinal,
-        "is_daylight": altitude > 0,
+        "is_daylight": bool(altitude > 0),
     }
 
     if altitude > 0:

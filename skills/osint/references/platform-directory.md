@@ -166,7 +166,7 @@ Comprehensive directory of OSINT platforms organized by domain. For each platfor
 | Platform | URL | Auth | What It Does | When to Use |
 |----------|-----|------|-------------|-------------|
 | **Wayback Machine** | web.archive.org | None | Historical snapshots of web pages since 1996 | Finding deleted content, tracking website changes over time |
-| **archive.today** | archive.today (also archive.ph, archive.is) | None | On-demand web page archiving | Preserving current page state; accessing cached copies |
+| **archive.today** | archive.today (also archive.ph, archive.is) | None | On-demand web page archiving; `uv run query_archive_today.py search <url>` | Preserving current page state; accessing cached copies |
 | **Google Cache** | `cache:URL` in Google | None | Google's most recent cached copy of a page | Quick check of recent page state; recently deleted content |
 | **Common Crawl** | commoncrawl.org | None | Massive web crawl archive (petabytes) | Large-scale historical analysis; finding pages not in Wayback |
 | **CachedView** | cachedview.nl | None | Aggregator for multiple cache sources | One-stop shop for finding cached versions |
@@ -278,6 +278,8 @@ Comprehensive directory of OSINT platforms organized by domain. For each platfor
 | **Bellingcat Toolkit** | bellingcat.gitbook.io/toolkit | None | Curated OSINT tool collection from Bellingcat | Finding verified, tested OSINT tools |
 | **Hunchly** | hunchly.com | Paid | Automatic web page capture during investigations | Preserving evidence while browsing (browser extension) |
 | **Wayback Machine Downloader** | github.com/hartator/wayback-machine-downloader | None (CLI) | Bulk download all Wayback Machine snapshots of a site | Downloading entire archived websites |
+| **Wikidata** | wikidata.org | None | Structured knowledge base for entity resolution; `uv run query_wikidata_sparql.py entity <name>` | Identifying people, orgs, places; enriching knowledge graphs |
+| **VirusTotal** | virustotal.com | Free API key | Domain/IP/URL/file reputation; `uv run query_virustotal.py domain <domain>` | Threat intelligence; checking if domains/files are flagged |
 
 ---
 
