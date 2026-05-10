@@ -91,10 +91,6 @@ ruff check skills/osint/scripts/                   # Lint scripts
 - **Challenges** must have Scenario, Expected Approach, Verification, and Ground Truth sections.
 - **`.mcp.json`** uses `${VARIABLE}` placeholders for API keys that expand from shell environment variables at startup.
 
-## Self-Improvement
-
-The `community-analysis.yml` GitHub workflow runs weekly, scraping OSINT communities (Reddit, Bellingcat, Sector035) and creating PRs with skill improvements. The workflow instructions are in `skills/osint/scripts/loop-analyze-community.md`.
-
 ## Feature Development
 
-`TODO.md` contains a structured backlog with "Ready to build", "Needs research", and "Blocked" categories. `IDEAS.md` is an unstructured brainstorming space. The community analysis workflow can append ideas to IDEAS.md.
+`TODO.md` contains a structured backlog with "Ready to build", "Needs research", and "Blocked" categories. `IDEAS.md` is an unstructured brainstorming space.
