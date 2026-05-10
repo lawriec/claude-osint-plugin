@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A Claude Code plugin that provides an open source intelligence (OSINT) research skill. It is **not** a traditional software project — there is no build step, no compiled code. The repository is a plugin definition consisting of:
 
 - **`.claude-plugin/plugin.json`** — Plugin metadata (name, description, author)
-- **`.mcp.json`** — MCP server configuration (11 servers for research tools)
+- **`.mcp.json`** — MCP server configuration (9 servers for research tools)
 - **`skills/osint/SKILL.md`** — The core skill definition (OSINT methodology, investigation workflow)
 - **`skills/osint/references/`** — Domain-specific reference guides loaded on-demand
 - **`skills/osint/scripts/`** — Python scripts runnable via `uv run` (no pre-installation needed)
@@ -19,7 +19,7 @@ A Claude Code plugin that provides an open source intelligence (OSINT) research 
 
 The plugin works through Claude Code's plugin system. When installed, it:
 
-1. Registers MCP servers (defined in `.mcp.json`) that provide tools for web search, archive access, image/video analysis, browser automation, and knowledge graph persistence
+1. Registers MCP servers (defined in `.mcp.json`) that provide tools for web search, archive access, image/video analysis, and reverse image search
 2. Exposes the `osint` skill (defined in `SKILL.md`) that triggers automatically when users describe OSINT tasks
 
 **SKILL.md** is the most important file. It defines the complete OSINT methodology following the intelligence cycle: Define (Step 1), Plan (Step 2), Collect (Step 3), Analyze (Step 4), Report (Step 5). Reference files in `references/` are loaded on-demand when specific domains or scenarios arise.
@@ -62,7 +62,9 @@ Key scripts:
 
 ## MCP Servers
 
-Twelve MCP servers are configured. Three require API keys via environment variables (`TAVILY_API_KEY`, `GEMINI_API_KEY`, `GOOGLE_VISION_API_KEY` for `google-reverse-image`). The `searxng` server accepts `SEARXNG_URL` (defaults to `http://localhost:8080`). The `yt-dl` server accepts `YTDLP_COOKIES_FROM_BROWSER` or `YTDLP_COOKIES_FILE` for YouTube authentication. The `reddit` server optionally accepts `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_REFRESH_TOKEN`. The `fetch` and `reddit` servers use `uvx` (Python); all others use `npx`.
+Nine MCP servers are configured. Three require API keys via environment variables (`TAVILY_API_KEY`, `GEMINI_API_KEY`, `GOOGLE_VISION_API_KEY` for `google-reverse-image`). The `searxng` server accepts `SEARXNG_URL` (defaults to `http://localhost:8080`). The `yt-dl` server accepts `YTDLP_COOKIES_FROM_BROWSER` or `YTDLP_COOKIES_FILE` for YouTube authentication. The `reddit` server optionally accepts `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and `REDDIT_REFRESH_TOKEN`. The `reddit` server uses `uvx` (Python); all others use `npx`.
+
+User-provided configuration is declared in `.claude-plugin/plugin.json` under `userConfig` using UPPERCASE keys that mirror standard environment variable names. `.mcp.json` references these as plain `${KEY}` substitutions — **not** the `${user_config.KEY}` namespaced form — so values can come from either source: (a) the `/plugin` configure UI, which stores them in `settings.json`/OS keychain and exports them to MCP subprocesses as env vars, or (b) shell environment variables exported in the user's shell before launching `claude`. If a key is set in both, the `/plugin` configure value takes precedence. Every value is optional — leaving a key blank disables that MCP server's tools but leaves the rest of the plugin working. To add a new credential: declare it in `.claude-plugin/plugin.json`'s `userConfig` block with `type` (usually `"string"`), `title`, `description`, and `sensitive` flag (keep the key name UPPERCASE to match env var convention), then reference it in the relevant MCP server's `env` block as `"${NEW_KEY}"`. `type` and `title` are required. Bumping `version` in `plugin.json` is required for existing installs to pick up `userConfig` schema changes.
 
 `.mcp.json` uses shell-style `${VAR:-default}` substitution so env vars are expanded from the shell environment at MCP launch — no rebuild needed when keys change. The plugin's `plugin.json` declares a `userConfig` block so `/plugin install` prompts for these keys interactively and persists them in `~/.claude/.credentials.json`. Keys also resolve from the surrounding shell environment, so either path works.
 

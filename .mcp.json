@@ -32,21 +32,6 @@
       "args": ["-y", "github:lawriec/mcp-video-reader"],
       "env": {}
     },
-    "selenium": {
-      "command": "npx",
-      "args": ["-y", "@angiejones/mcp-selenium@latest"],
-      "env": {}
-    },
-    "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"],
-      "env": {}
-    },
-    "memory-graph": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "env": {}
-    },
     "common-crawl": {
       "command": "npx",
       "args": ["-y", "github:lawriec/mcp-common-crawl"],
